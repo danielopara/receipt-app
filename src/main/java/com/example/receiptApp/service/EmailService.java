@@ -18,6 +18,8 @@ public class EmailService {
     private String buildEmailBody(ReceiptResponse receiptResponse) {
         StringBuilder emailBody = new StringBuilder();
 
+        String customerEmail = receiptResponse.getCustomerEmail();
+
         emailBody.append("<html>")
                 .append("<head>")
                 .append("<style>")
@@ -40,9 +42,14 @@ public class EmailService {
                 .append("<p><strong>Shop Address:</strong> ").append(receiptResponse.getShopAddress()).append("</p>")
                 .append("<p><strong>Shop Email:</strong> ").append(receiptResponse.getShopEmail()).append("</p>")
                 .append("<p><strong>Shop Phone Number:</strong> ").append(receiptResponse.getShopPhoneNumber()).append("</p>")
-                .append("<p><strong>Customer Name:</strong> ").append(receiptResponse.getCustomerName()).append("</p>")
-                .append("<p><strong>Customer Email:</strong> ").append(receiptResponse.getCustomerEmail()).append("</p>")
-                .append("<p><strong>Customer Phone Number:</strong> ").append(receiptResponse.getCustomerPhoneNumber()).append("</p>")
+                .append("<p><strong>Customer Name:</strong> ").append(receiptResponse.getCustomerName()).append("</p>");
+//                .append("<p><strong>Customer Email:</strong> ").append(receiptResponse.getCustomerEmail()).append("</p>")
+        if (customerEmail != null && !customerEmail.isEmpty()) {
+            emailBody.append("<p><strong>Customer Email:</strong> ").append(customerEmail).append("</p>");
+        } else {
+            emailBody.append("<p><strong>Customer Email:</strong> Not provided</p>");
+        }
+                emailBody.append("<p><strong>Customer Phone Number:</strong> ").append(receiptResponse.getCustomerPhoneNumber()).append("</p>")
                 .append("<h3>Purchase Items</h3>")
                 .append("<ul>");
 
@@ -70,18 +77,12 @@ public class EmailService {
         try {
             helper.setTo(to);
             helper.setSubject(subject);
-            helper.setText(body, true); // Set to true to indicate HTML content
+            helper.setText(body, true);
         } catch (MessagingException e) {
             // Handle exception
             e.printStackTrace();
         }
 
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setFrom("oparadaniv@gmail.com");
-//        message.setTo(to);
-//        message.setSubject(subject);
-//        message.setText(body);
-//
         javaMailSender.send(mimeMessage);
         System.out.println("Mail sent successfully");
     }

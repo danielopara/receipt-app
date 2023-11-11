@@ -85,7 +85,7 @@ public class ReceiptService {
     public List<Object[]> findByEmail(String email){
         return receiptRepo.findAllColumnsByEmail(email);
     }
-    public Optional<Receipt> findByPhoneNumber(String phoneNumber){
-        return receiptRepo.findByCustomerPhoneNumber(phoneNumber);
+    public List<Object[]> findByPhoneNumber(String phoneNumber){
+        return receiptRepo.findAllColumnsByPhoneNumber(phoneNumber);
     }
 }

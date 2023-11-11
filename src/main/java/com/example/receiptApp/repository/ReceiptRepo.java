@@ -13,6 +13,7 @@ public interface ReceiptRepo extends JpaRepository<Receipt, Long> {
     @Query(value = "SELECT * FROM receipt_table WHERE customer_email = :email", nativeQuery = true)
     List<Object[]> findAllColumnsByEmail(String email);
 
-    Optional<Receipt> findByCustomerPhoneNumber(String phoneNumber);
+    @Query(value = "SELECT * FROM receipt_table WHERE customer_phone_number = :phoneNumber", nativeQuery = true)
+    List<Object[]> findAllColumnsByPhoneNumber(String phoneNumber);
 
 }
