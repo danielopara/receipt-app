@@ -82,4 +82,10 @@ public class ReceiptService {
                 receipt.getAmount(),
                 receiptRequest.getPurchaseItemRequest());
     }
+    public List<Object[]> findByEmail(String email){
+        return receiptRepo.findAllColumnsByEmail(email);
+    }
+    public Optional<Receipt> findByPhoneNumber(String phoneNumber){
+        return receiptRepo.findByCustomerPhoneNumber(phoneNumber);
+    }
 }
